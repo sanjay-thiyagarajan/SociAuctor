@@ -1,0 +1,39 @@
+{% extends 'panel/template.html' %}
+{% load static %}
+{% block head %}
+<title>Profile</title>
+{% endblock %}
+
+{% block sidebar %}
+    <ul class="navbar-nav text-light" id="accordionSidebar">
+        <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'bookings' %}"><i class="fa fa-dollar"></i><span>Bookings</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'wallet_view' %}"><i class="fa fa-book"></i><span>Wallet</span></a></li>
+    </ul>
+{% endblock %}
+
+
+{% block content %}
+
+                <div class="container-fluid">
+                    <div class="card shadow border-start-success py-2">
+                        <div class="card-body">
+                            <div class="row align-items-center no-gutters">
+                                <div class="col me-2">
+                                    <center><h1 style="font-weight: bold; padding: 10px;">Profile</h1></center>
+                                    <div class="card shadow border-start-success py-2" style="padding: 35px;">
+                                        <h5 style="font-weight: bold; padding-top: 30px;padding-bottom:10px;">PROFILE DETAILS</h5><hr>
+                                        <p style="font-weight: bold;">Full Name: </p><p>{{student.fullname}}</p><hr>
+                                        <p style="font-weight: bold;">Roll Number: </p><p>{{student.roll_number}}</p><hr>
+                                        <p style="font-weight: bold;">Email Address: </p><p>{{student.email}}</p><hr>
+                                        <p style="font-weight: bold;">Academic Year: </p><p>{{student.academic_year}}</p><hr>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+{% endblock %}

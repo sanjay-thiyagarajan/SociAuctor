@@ -1,0 +1,38 @@
+{% extends 'panel/template.html' %}
+{% load static %}
+{% block head %}
+<title>Return Book</title>
+<link rel="stylesheet" href="{% static 'css/Login-Form-Clean.css' %}">
+{% endblock %}
+
+{% block sidebar %}
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'bookings' %}"><i class="fa fa-dollar"></i><span>Bookings</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li>
+                </ul>
+{% endblock %}
+
+
+{% block content %}
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-1" style="font-weight: bold;color: var(--bs-gray);margin-top: 20PX;">RETURN BOOK</h3>
+                </div><!-- Start: Login Form Clean -->
+                <section class="login-clean">
+                    <form method="post" style="border-radius: 35px;border: 2px solid var(--bs-red);width: 450px;max-width: 450px;">
+                        {% csrf_token %}
+                        <h2 class="visually-hidden">Borrow Form</h2>
+                        <div class="illustration"><i class="fa fa-book" style="color: var(--bs-red);"></i></div>
+                        <p>Borrower: <b>{{borrow.borrower.fullname}}</b></p><hr>
+                        <p>Book: <b>{{borrow.book.title}}</b></p><hr>
+                        <p>Due Date: <font color="{{color}}"><b>{{borrow.due_date}}</b></font></p><hr>
+                        <p> Fine: <font size='15'><b>&nbsp;&nbsp;₹ {{borrow.fine_amount}}</b></font></p><hr>
+                        <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-red);border-radius: 7px;">RETURN BOOK</button></div>
+                        {% if error %}
+                            <p class="errorbox">{{error}}</p>
+                        {% endif %}
+                 </form>
+                </section><!-- End: Login Form Clean -->
+
+{% endblock %}

@@ -1,3 +1,8 @@
 from django.contrib import admin
+from panel.models import *
 
-# Register your models here.
+admin.site.register(Member)
+admin.site.register(Deal)
+admin.site.register(Activity)
+admin.site.register(Transaction)
+admin.site.register(Category)

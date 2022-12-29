@@ -1,0 +1,65 @@
+{% extends 'panel/template.html' %}
+{% load static %}
+{% block head %}
+<title>Bookings</title>
+{% endblock %}
+
+{% block sidebar %}
+                <ul class="navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'bookings' %}"><i class="fa fa-dollar"></i><span>Bookings</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'wallet_view' %}"><i class="fa fa-book"></i><span>Wallet</span></a></li>
+                </ul>
+{% endblock %}
+
+
+{% block content %}
+
+                <div class="container-fluid">
+                    <h3 class="text-dark mb-4">Bookings</h3>
+                    <div class="card shadow">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Booking Info</p>
+                        </div>
+                        <div style="border-style: solid; padding: 15px; border-radius: 6px;">
+                            <p style="padding: 5px;">Sort by</p>
+                            <form method="post">
+                            {% csrf_token %}
+                                <select name="sort_by" style="width: 500px; height: 40px; padding: 5px;">
+                                    <option>Book</option>
+                                    <option>Borrowed_on</option>
+                                    <option>Due_date</option>
+                                    <option>Fine_amount</option>
+                                </select>
+                                <button style="width: 70px; height: 40px;padding-left: 5px; padding-right: 5px; background-color: green; color: white; border-color: green; border-radius: 3px;">Sort</button>
+                            </form>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-bordered" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Book</th>
+                                        <th>Borrowed on</th>
+                                        <th>Due Date</th>
+                                        <th>Fine amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for borrow in borrows %}
+                                        <tr>
+                                            <td>{{borrow.book.title}}</td>
+                                            <td>{{borrow.borrowed_on}}</td>
+                                            <td>{{borrow.due_date}}</td>
+                                            <td>{{borrow.fine_amount}}</td>
+                                            <td><a href="/return-book/{{borrow.id}}/"><button type="button" style="background-color: red; color: white; padding: 2px; border-color: red; border-radius: 5px;">Return</button></a>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+{% endblock %}

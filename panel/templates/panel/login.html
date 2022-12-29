@@ -1,0 +1,30 @@
+{% extends 'panel/template.html' %}
+{% load static %}
+{% block head %}
+<title>Login</title>
+{% endblock %}
+
+{% block content %}
+<div class="container" style="width:40%; align-content:center;flex-wrap:wrap;">
+    <div class="card shadow-lg o-hidden border-0 my-5" style="border-radius: 16px;">
+        <div class="card-body">
+            <div class="text-center">
+                <h4 class="text-dark mb-4" style="font-weight: bold;font-size: 32px;margin-top:20px;">LOGIN</h4>
+            </div><br>
+            <form class="user" method="post">
+                {% csrf_token %}
+                <div class="form-group" style="margin:10px;"><input required class="form-control form-control-user" type="text" id="username" placeholder="Username" name="username"></div>
+                <div class="form-group" style="margin:10px;"><input required class="form-control form-control-user" type="password" id="password" placeholder="Password" name="password"></div><br>
+                <center><button class="btn btn-primary btn-block text-white btn-user" style="width:100%;" type="submit">LOGIN</button></center>
+                <br>
+                {% if message %}
+                    <p class="errorbox">{{message}}</p>
+                {% endif %}
+                <hr>
+            </form>
+            <div class="text-center"><a class="small" href="{% url 'reset_password'  %}">Forgot Password?</a></div>
+            <center><a href="{% url 'signup' %}"><button class="btn btn-primary btn-block text-white btn-user" style="width:100%; margin-top: 20px; margin-bottom:20px; border-radius: 25px;" type="submit">SIGNUP</button></a></center>
+        </div>
+    </div>
+</div>
+{% endblock %}
