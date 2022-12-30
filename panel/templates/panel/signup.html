@@ -19,7 +19,7 @@
                         <select required class="form-control" name="country" placeholder="Country" style="padding: 5px;margin-top: 10px;">
                             <option disabled selected>Select Country</option>
                             {% for c in countries %}
-                                <option>{{c}}</option>
+                                <option value="{{c}}">{{c}}</option>
                             {% endfor %}
                         </select>
                         <input required class="form-control" type="password" name="password" placeholder="New Password" style="padding: 5px;margin-top: 10px;">
