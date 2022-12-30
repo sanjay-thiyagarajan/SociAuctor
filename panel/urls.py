@@ -23,5 +23,7 @@ urlpatterns = [
     path('add_deal/', views.add_deal, name='add_deal'),
     path('add_activity/', views.add_activity, name='add_activity'),
     path('view_activity/<int:id>/', views.view_activity, name='view_activity'),
-    path('view_deal/<int:id>/', views.view_deal, name='view_deal')
+    path('view_deal/<int:id>/', views.view_deal, name='view_deal'),
+    path('deals/', views.deals, name='deals'),
+    path('funding_activities/', views.funding_activities, name='funding_activities')
 ]

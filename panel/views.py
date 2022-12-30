@@ -269,5 +269,21 @@ def makeDonation(payer, amount, activity=None, deal=None):
             deal.poster.save()
         deal.save()
         
-        
+@login_required(login_url='login')
+def deals(request): 
+    data = {}
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    your_deals = Deal.objects.filter(status='available', poster=member)
+    other_deals = Deal.objects.filter(status='available').exclude(poster=member)
+    data['your_deals'] = your_deals
+    data['other_deals'] = other_deals
+    return render(request, 'panel/deals.html', data) 
+
+@login_required(login_url='login')
+def funding_activities(request):
+    data = {}
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    activities = Activity.objects.filter(status='in-need').exclude(poster=member)
+    data['activities'] = activities
+    return render(request, 'panel/funding-activities.html', data)      
         
