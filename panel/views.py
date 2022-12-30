@@ -202,8 +202,6 @@ def view_deal(request, id):
             bid_amount = float(request.POST.get('bid_amount_field'))
             if bid_amount <= deal.bid_price:
                 data['warning'] = 'Place a higher bid amount.'
-            elif bid_amount > member.balance:
-                data['error'] = 'Insufficient balance in your wallet.'
             else:
                 placeBid(member, bid_amount, deal)
                 data['success'] = True
