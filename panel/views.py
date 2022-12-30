@@ -109,7 +109,11 @@ def add_deal(request):
 @login_required(login_url='login')
 def add_activity(request):
     data = {}
-    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    try:
+        member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    except:
+        logoutApp(request)
+
     if request.method == 'POST':
         title = request.POST.get('title')
         description = request.POST.get('description')
@@ -119,7 +123,7 @@ def add_activity(request):
         category = request.POST.get('category')
         deadline = request.POST.get('deadline')
         
-        act = Activity(
+        Activity.objects.create(
             title=title,
             poster=member,
             amount=amount,
@@ -129,8 +133,7 @@ def add_activity(request):
             status='in-need',
             category=Category.objects.get(name=category),
             image=image
-            )
-        act.save()
+        )
         return redirect('home')
     categories = Category.objects.all()
     data['categories'] = categories
