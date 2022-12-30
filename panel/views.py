@@ -25,8 +25,10 @@ def loginApp(request):
 @login_required(login_url='login')
 def home(request):
     data = {}
-    activities = Activity.objects.all()
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    activities = Activity.objects.filter(poster=member)
     data['activities'] = activities
+    data['fullname'] = member.first_name + ' ' + member.last_name
     return render(request, 'panel/index.html', data)
     
 @unAuthenticated_user
@@ -73,3 +75,7 @@ def signupApp(request):
                 return render(request, 'panel/signup.html', data)
     data['countries'] = dict(countries).values()
     return render(request, 'panel/signup.html', data)
+
+def logoutApp(request):
+    logout(request)
+    return redirect(loginApp)

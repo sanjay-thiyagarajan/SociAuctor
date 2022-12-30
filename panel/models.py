@@ -26,6 +26,7 @@ class Activity(models.Model):
         ('achieved', 'achieved'),
         ('failed', 'failed')
     ]
+    poster = models.ForeignKey(Member, on_delete=models.CASCADE, null=True)
     image = models.ImageField(null = True)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=1000, null=True)
