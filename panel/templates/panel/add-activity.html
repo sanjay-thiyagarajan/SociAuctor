@@ -23,7 +23,7 @@
                     <h3 class="text-dark mb-1" style="font-weight: bold;color: var(--bs-gray);margin-top: 20PX;">ADD DEAL</h3>
                 </div><!-- Start: Login Form Clean -->
                 <section class="login-clean">
-                    <form method="post" style="border-radius: 35px;border: 2px solid black;width: 550px;max-width: 550px;">
+                    <form method="post" style="border-radius: 35px;border: 2px solid black;width: 550px;max-width: 550px;" enctype="multipart/form-data">
                         {% csrf_token %}
                         <h2 class="visually-hidden">Deal Form</h2>
                         <h2>Activity Details</h2><br/>
@@ -34,7 +34,7 @@
                         <div class="mb-3">
                             <label for="formProofFile" class="form-label">Proof Document</label>
                             <input required class="form-control" type="file" name="proofdoc" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
-                            text/plain, application/pdf, image/*" id="formProofFile">
+                            text/plain, application/pdf, image/*" id="formProofFile" enctype="multipart/form-data">
                         </div>
                         <input required class="form-control" type="text" name="title" placeholder="Title" style="padding: 5px;"><br/>
                         <textarea required class="form-control" name="description" placeholder="Description" style="padding: 5px;"></textarea>

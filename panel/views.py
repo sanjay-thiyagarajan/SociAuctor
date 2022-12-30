@@ -88,6 +88,7 @@ def add_deal(request):
         activity = request.POST.get('activity')
         activity_id = activity.split(' - ')[0]
         deadline = request.POST.get('deadline')
+        image = request.FILES.getlist('image')[-1]
         
         deal = Deal(
             title=title,
@@ -97,6 +98,7 @@ def add_deal(request):
             highest_bidder=member,
             activity=Activity.objects.get(id=activity_id),
             deadline=deadline,
+            image=image,
             status='available'
             )
         deal.save()
@@ -118,8 +120,8 @@ def add_activity(request):
         title = request.POST.get('title')
         description = request.POST.get('description')
         amount = request.POST.get('amount')
-        image = request.FILES.get('image')
-        proofdoc = request.FILES.get('proofdoc')
+        proofdoc = request.FILES.getlist('proofdoc')[-1]
+        image = request.FILES.getlist('image')[-1]
         category = request.POST.get('category')
         deadline = request.POST.get('deadline')
         
