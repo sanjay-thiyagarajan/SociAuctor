@@ -22,20 +22,25 @@
             <h3 class="text-dark mb-0"><b>Dashboard</b></h3>
         </div>
         <div class="column">
-            <div class="card shadow border-start-warning py-2">
-                <h3 style="padding-left:20px;padding-top:20px;font-weight:bold;margin-bottom:20px;">Your Deals</h3>
-                <a href="#"><button type="button" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px; margin: 20px;">+ New Deal</button></a>
+            <div class="card shadow border-start-warning py-2" style="padding: 20px;">
+                <br/>
+                <h3 style="font-weight:bold">Your Deals</h3><br/>
+                <a href="{% url 'add_deal' %}" style="width: max-content;"><button type="button" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;">+ New Deal</button></a>
+                <br/>
                 {% if deals %}
                     <div class="row">
                         {% for deal in deals %}
                             <div class = "col-sm-6">
-                                <div class = "card">
-                                    <img class="card-img-top" src="{{deal.image.url}}" alt="No Image">
+                                <div class = "card" style="width: min-content">
+                                    <img class="card-img-top" src="{{deal.image.url}}" alt="No Image"  style="width: 500px; height: 300px;">
                                     <div class="card-body">
                                         <h5 class="card-title">{{deal.title}}</h5>
                                         <p class="card-text">
                                             <b>{{deal.poster.first_name}} {{deal.poster.last_name}}</b><br/>
-                                            $ {{deal.initial_price}}
+                                            <div class="row">
+                                                <span><del>$ {{deal.initial_price}}</del>
+                                                <p style="font-weight: bold; color: green;">$ {{deal.bid_price}}</p></span>
+                                            </div>
                                         </p>
                                         <a href="#" class="btn btn-primary">View More</a>
                                     </div>
@@ -51,17 +56,20 @@
                 {% endif %}
             </div>
             <br/><br/>
-            <div class="card shadow border-start-warning py-2">
-                <h3 style="padding-left:20px;padding-top:20px;font-weight:bold;margin-bottom:20px;">Your Funding Activities</h3>
+            <div class="card shadow border-start-warning py-2" style="padding: 20px;">
+                <br/>
+                <h3 style="font-weight:bold;">Your Funding Activities</h3><br/>
+                <a href="{% url 'add_activity' %}" style="width: max-content;"><button type="button" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;">+ New Funding Activity</button></a>
+                <br/>
                 {% if activities %}
                     <div class="row">
                         {% for activity in activities %}
                             <div class = "col-sm-6">
-                                <div class = "card">
-                                    <img class="card-img-top" src="{{activity.image.url}}" alt="{{activity.category}}">
+                                <div class = "card" style="width: min-content">
+                                    <img class="card-img-top" src="{{activity.image.url}}" alt="{{activity.category}}" style="width: 500px; height: 300px;">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{activity.title}}</h5>
-                                        <p class="card-text">{{activity.description}}<br/><b>{{activity.amount}}</b></p>
+                                        <h5 class="card-title"><b>{{activity.title}}</b></h5>
+                                        <p class="card-text">{{activity.description}}<br/><br/><b style="font-size: 20px;">$ {{activity.amount}}</b></p>
                                         <a href="#" class="btn btn-primary">View More</a>
                                     </div>
                                     <div class="card-footer text-muted">

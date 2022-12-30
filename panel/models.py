@@ -38,7 +38,7 @@ class Activity(models.Model):
     deadline = models.DateTimeField(null=True)
     
     def __str__(self):
-        return self.id + '-' + self.title
+        return str(self.id) + '-' + str(self.title)
     
     def get_image_url(self):
         return self.image.url
@@ -61,7 +61,7 @@ class Deal(models.Model):
     deadline = models.DateTimeField(null=True)
     
     def __str__(self):
-        return self.id + '-' + self.title
+        return str(self.id) + '-' + str(self.title)
 
 class Transaction(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4, max_length=256)

@@ -27,7 +27,9 @@ def home(request):
     data = {}
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
     activities = Activity.objects.filter(poster=member)
+    deals = Deal.objects.filter(poster=member)
     data['activities'] = activities
+    data['deals'] = deals
     data['fullname'] = member.first_name + ' ' + member.last_name
     return render(request, 'panel/index.html', data)
     
@@ -122,9 +124,10 @@ def add_activity(request):
             poster=member,
             amount=amount,
             description=description,
-            proofdoc=proofdoc,
+            proof=proofdoc,
             deadline=deadline,
             status='in-need',
+            category=Category.objects.get(name=category),
             image=image
             )
         act.save()
