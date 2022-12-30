@@ -103,6 +103,36 @@ def add_deal(request):
     data['activities'] = activities
     data['fullname'] = member.first_name + ' ' + member.last_name
     return render(request, 'panel/add-deal.html', data)
+    
+@login_required(login_url='login')
+def add_activity(request):
+    data = {}
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        amount = request.POST.get('amount')
+        image = request.FILES.get('image')
+        proofdoc = request.FILES.get('proofdoc')
+        category = request.POST.get('category')
+        deadline = request.POST.get('deadline')
+        
+        act = Activity(
+            title=title,
+            poster=member,
+            amount=amount,
+            description=description,
+            proofdoc=proofdoc,
+            deadline=deadline,
+            status='in-need',
+            image=image
+            )
+        act.save()
+        return redirect('home')
+    categories = Category.objects.all()
+    data['categories'] = categories
+    data['fullname'] = member.first_name + ' ' + member.last_name
+    return render(request, 'panel/add-activity.html', data)
 
 @login_required(login_url='login')
 def wallet_view(request):

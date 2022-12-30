@@ -34,7 +34,7 @@ class Activity(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
     proof = models.FileField()
     status = models.CharField(choices=statuses, max_length=12)
-    posted_on = models.DateTimeField(auto_now_add=True)
+    posted_on = models.DateTimeField(auto_now_add=True, null=True)
     deadline = models.DateTimeField(null=True)
     
     def __str__(self):
@@ -57,7 +57,7 @@ class Deal(models.Model):
     bid_price = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     status = models.CharField(choices=statuses, max_length=12)
-    posted_on = models.DateTimeField(auto_now_add=True)
+    posted_on = models.DateTimeField(auto_now_add=True, null=True)
     deadline = models.DateTimeField(null=True)
     
     def __str__(self):

@@ -20,5 +20,6 @@ urlpatterns = [
         name="password_reset_complete"),
     path('logout/', views.logoutApp, name='logout'),
     path('wallet/', views.wallet_view, name='wallet_view'),
-    path('add_deal/', views.add_deal, name='add_deal')
+    path('add_deal/', views.add_deal, name='add_deal'),
+    path('add_activity/', views.add_activity, name='add_activity')
 ]
