@@ -7,9 +7,9 @@ We propose a full stack web application which would serve as a bridge between pu
 ![image](https://user-images.githubusercontent.com/42594454/191088370-852af4fe-eaf9-41ee-84fe-19bf721e071d.png)
 
 ## :technologist: Tech Stack  
-- React JS
-- Firebase (Firestore & Storage)
-- Node.js  
+- Django
+- Azure Web App Service
+- PostgreSQL
 ## :blue_book: What we have learnt    
 ## :thinking: What's next ?  
 - Extending the crowdfunding platform for social & economical causes  
