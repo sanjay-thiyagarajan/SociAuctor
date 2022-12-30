@@ -76,6 +76,41 @@ def signupApp(request):
     data['countries'] = dict(countries).values()
     return render(request, 'panel/signup.html', data)
 
+@login_required(login_url='login')
+def add_deal(request):
+    data = {}
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        initial_price = request.POST.get('initial_price')
+        activity = request.POST.get('activity')
+        activity_id = activity.split(' - ')[0]
+        deadline = request.POST.get('deadline')
+        
+        deal = Deal(
+            title=title,
+            poster=member,
+            initial_price=initial_price,
+            bid_price=initial_price,
+            highest_bidder=member,
+            activity=Activity.objects.get(id=activity_id),
+            deadline=deadline,
+            status='available'
+            )
+        deal.save()
+        return redirect('home')
+    activities = Activity.objects.filter(status='in-need')
+    data['activities'] = activities
+    data['fullname'] = member.first_name + ' ' + member.last_name
+    return render(request, 'panel/add-deal.html', data)
+
+@login_required(login_url='login')
+def wallet_view(request):
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    transactions = Transaction.objects.filter(payer = member)
+    fullname = member.first_name + ' ' + member.last_name
+    return render(request, 'panel/wallet-view.html', {'member' :member, 'fullname': fullname, 'transactions': transactions})
+
 def logoutApp(request):
     logout(request)
     return redirect(loginApp)

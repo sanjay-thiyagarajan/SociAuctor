@@ -6,11 +6,11 @@
 
 {% block sidebar %}
     <ul class="navbar-nav text-light" id="accordionSidebar">
-        <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}"><i class="fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+{% comment %}         <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'bookings' %}"><i class="fa fa-dollar"></i><span>Bookings</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'wallet_view' %}"><i class="fas fa fa-book"></i><span>Wallet</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li> {% endcomment %}
+        <li class="nav-item"><a class="nav-link active" href="{% url 'wallet_view' %}"><i class="fas fa fa-book"></i><span>Wallet</span></a></li>
     </ul>
 {% endblock %}
 
@@ -28,26 +28,9 @@
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
                                             <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Balance</span></div>
-                                            <div class="text-dark fw-bold h5 mb-0"><font size="20" color="green"><span>₹ {{student.balance}}</span></font></div>
+                                            <div class="text-dark fw-bold h5 mb-0"><font size="20" color="green"><span>$ {{member.balance}}</span></font></div>
                                         </div>
                                         <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4 mb-4">
-                            <div class="card shadow border-start-info py-2">
-                                <div class="card-body">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col me-2">
-                                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>Fine to be paid</span></div>
-                                            <div class="row g-0 align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="text-dark fw-bold h5 mb-0 me-3"><font size="20" color="red"><span>₹ {{total_fine}}</span></font></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto"><i class="fas fa-book fa-2x text-gray-300"></i></div>
                                     </div>
                                 </div>
                             </div>
@@ -62,22 +45,23 @@
                                         <tr>
                                             <th>Transaction ID</th>
                                             <th>Timestamp</th>
-                                            <th>Book</th>
-                                            <th>Fine amount</th>
+                                            <th>Deal</th>
+                                            <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for tr in transactions %}
                                             <tr>
                                                 <td>{{tr.id}}</td>
-                                                <td>{{tr.payment_timestamp}}</td>                                                <td>{{tr.book.title}}</td>
+                                                <td>{{tr.payment_timestamp}}</td> 
+                                                <td>{{tr.deal.title}}</td>
                                                 <td>{{tr.amount}}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
                             {% else %}
-                                <p class="successbox">Great! No pending returns currently</p>
+                                <p class="warningbox">No transactions made so far</p>
                             {% endif %}
                         </div>
                     </div>
