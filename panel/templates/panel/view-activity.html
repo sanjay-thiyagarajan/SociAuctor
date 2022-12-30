@@ -40,10 +40,14 @@
                                 <p style="font-size: 20px; font-weight: bold;">We are <font color="red">${{remaining}}</font> away from our goal</p>
                                 <form method="POST">
                                     {% csrf_token %}
-                                    <div class="input-group">
-                                        <input class="form-control" type="number" name="donation_amount_field" placeholder="Enter your donation amount here (eg. 10000.00)">
-                                        <button type="submit" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;" class = "form-control">Donate</button>
-                                    </div>
+                                    {% if poster %}
+                                        <h3>Edit Activity Details</h3><br/>
+                                    {% else %}
+                                        <div class="input-group">
+                                            <input class="form-control" type="number" name="donation_amount_field" placeholder="Enter your donation amount here (eg. 10000.00)">
+                                            <button type="submit" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;" class = "form-control">Donate</button>
+                                        </div>
+                                    {% endif %}
                                 </form>
                                 <br/>
                                 {% if success %}
@@ -51,6 +55,9 @@
                                 {% endif %}
                                 {% if error %}
                                     <p class="errorbox" style="font-weight: bold;">Error :( {{error}}</p>
+                                {% endif %}
+                                {% if warning %}
+                                    <p class="warningbox" style="font-weight: bold;">{{warning}}</p>
                                 {% endif %}
                             </div>
                         </div>

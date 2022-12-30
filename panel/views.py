@@ -141,6 +141,9 @@ def add_activity(request):
 def view_activity(request, id):
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
     activity = Activity.objects.get(id = id)
+    poster = False
+    if activity.poster.id == member.id:
+        poster = True
     donated_amount = activity.donated_amount
     total = activity.amount
     percentage =  int((donated_amount / total ) * 100)
@@ -154,10 +157,11 @@ def view_activity(request, id):
         else:
             makeDonation(member, donation_amount, activity)
             return render(request, 'panel/view-activity.html', {'success': True})
-    return render(request, 'panel/view-activity.html', { 'activity': activity, 'percentage': percentage, 'remaining': remaining })
+    return render(request, 'panel/view-activity.html', { 'activity': activity, 'percentage': percentage, 'remaining': remaining, 'poster': poster })
     
 @login_required(login_url='login')
 def view_deal(request, id):
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
     return render(request, 'panel/view-deal.html')
 
 @login_required(login_url='login')
@@ -174,9 +178,11 @@ def logoutApp(request):
 def makeDonation(payer, amount, activity=None, deal=None):
     if activity is not None:
         activity.donated_amount += amount
+        activity.poster.balance += amount
         payer.balance -= amount
         if activity.amount == activity.donated_amount:
             activity.status = 'achieved'
+        activity.poster.save()
         activity.save()
         payer.save()
         tr = Transaction(
