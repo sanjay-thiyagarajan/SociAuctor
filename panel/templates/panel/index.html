@@ -42,7 +42,7 @@
                                                 <p style="font-weight: bold; color: green;">$ {{deal.bid_price}}</p></span>
                                             </div>
                                         </p>
-                                        <a href="#" class="btn btn-primary">View More</a>
+                                        <a href="/view_deal/{{deal.id}}" class="btn btn-primary">View More</a>
                                     </div>
                                     <div class="card-footer text-muted">
                                         {{deal.deadline}}
@@ -70,7 +70,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><b>{{activity.title}}</b></h5>
                                         <p class="card-text">{{activity.description}}<br/><br/><b style="font-size: 20px;">$ {{activity.amount}}</b></p>
-                                        <a href="#" class="btn btn-primary">View More</a>
+                                        <a href="/view_activity/{{activity.id}}" class="btn btn-primary">View More</a>
                                     </div>
                                     <div class="card-footer text-muted">
                                         {{activity.deadline}}

@@ -21,5 +21,7 @@ urlpatterns = [
     path('logout/', views.logoutApp, name='logout'),
     path('wallet/', views.wallet_view, name='wallet_view'),
     path('add_deal/', views.add_deal, name='add_deal'),
-    path('add_activity/', views.add_activity, name='add_activity')
+    path('add_activity/', views.add_activity, name='add_activity'),
+    path('view_activity/<int:id>/', views.view_activity, name='view_activity'),
+    path('view_deal/<int:id>/', views.view_deal, name='view_deal')
 ]

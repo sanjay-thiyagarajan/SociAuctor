@@ -8,9 +8,9 @@
 {% block sidebar %}
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
+                    {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'bookings' %}"><i class="fa fa-dollar"></i><span>Bookings</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li> {% endcomment %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'wallet_view' %}"><i class="fa fa-book"></i><span>Wallet</span></a></li>
                 </ul>
 {% endblock %}

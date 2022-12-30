@@ -36,6 +36,7 @@ class Activity(models.Model):
     status = models.CharField(choices=statuses, max_length=12)
     posted_on = models.DateTimeField(auto_now_add=True, null=True)
     deadline = models.DateTimeField(null=True)
+    donated_amount = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
     
     def __str__(self):
         return str(self.id) + '-' + str(self.title)
@@ -67,7 +68,8 @@ class Transaction(models.Model):
     id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4, max_length=256)
     payment_timestamp = models.DateTimeField(auto_now_add=True)
     payer = models.ForeignKey(Member, on_delete=models.DO_NOTHING)
-    deal = models.ForeignKey(Deal, on_delete=models.DO_NOTHING)
+    deal = models.ForeignKey(Deal, on_delete=models.DO_NOTHING, null=True)
+    activity = models.ForeignKey(Activity, on_delete=models.DO_NOTHING, null=True)
     amount = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
 
     def __str__(self):

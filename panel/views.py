@@ -138,6 +138,29 @@ def add_activity(request):
     return render(request, 'panel/add-activity.html', data)
 
 @login_required(login_url='login')
+def view_activity(request, id):
+    member = Member.objects.get(user = User.objects.get(id = request.user.id))
+    activity = Activity.objects.get(id = id)
+    donated_amount = activity.donated_amount
+    total = activity.amount
+    percentage =  int((donated_amount / total ) * 100)
+    remaining = total - donated_amount
+    if request.method == 'POST':
+        donation_amount = request.POST.get('donation_amount_field')
+        if donation_amount > member.balance:
+            return render(request, 'panel/view-activity.html', { 'error': 'Insufficient balance in your wallet.' })
+        elif donation_amount > remaining:
+            return render(request, 'panel/view-activity.html', { 'warning': 'We appreciate your kind gesture. But the provided amount exceeds the expected amount. We recommend you to donate through our product deal auctions to reward the extra amount to passionate dealers' })
+        else:
+            makeDonation(member, donation_amount, activity)
+            return render(request, 'panel/view-activity.html', {'success': True})
+    return render(request, 'panel/view-activity.html', { 'activity': activity, 'percentage': percentage, 'remaining': remaining })
+    
+@login_required(login_url='login')
+def view_deal(request, id):
+    return render(request, 'panel/view-deal.html')
+
+@login_required(login_url='login')
 def wallet_view(request):
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
     transactions = Transaction.objects.filter(payer = member)
@@ -147,3 +170,35 @@ def wallet_view(request):
 def logoutApp(request):
     logout(request)
     return redirect(loginApp)
+    
+def makeDonation(payer, amount, activity=None, deal=None):
+    if activity is not None:
+        activity.donated_amount += amount
+        payer.balance -= amount
+        if activity.amount == activity.donated_amount:
+            activity.status = 'achieved'
+        activity.save()
+        payer.save()
+        tr = Transaction(
+            payer=payer,
+            amount=amount,
+            activity=activity
+        )
+        tr.save()
+    if deal is not None:
+        donatable = deal.activity.amount - deal.activity.donated_amount
+        deal.activity.donated_amount += donatable
+        payer.balance -= donatable
+        if deal.activity.donated_amount == deal.activity.amount:
+            deal.activity.status = 'achieved'
+        deal.activity.save()
+        dealer_bonus = amount - donatable
+        if dealer_bonus > 0:
+            deal.poster.balance += dealer_bonus
+            payer.balance -= dealer_bonus
+            payer.save()
+            deal.poster.save()
+        deal.save()
+        
+        
+        
