@@ -4,11 +4,11 @@ from django.contrib.auth.models import User
 import uuid
 
 class Member(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30)
     email = models.EmailField(max_length=50, unique=True)
-    country = CountryField()
+    country = CountryField(null=True)
     balance = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
     
     def __str__(self):
@@ -26,7 +26,7 @@ class Activity(models.Model):
         ('achieved', 'achieved'),
         ('failed', 'failed')
     ]
-    poster = models.ForeignKey(Member, on_delete=models.CASCADE, null=True)
+    poster = models.ForeignKey(Member, on_delete=models.CASCADE, null=True, db_constraint=False)
     image = models.ImageField(null = True)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=1000, null=True)
@@ -65,7 +65,7 @@ class Deal(models.Model):
         return str(self.id) + '-' + str(self.title)
 
 class Transaction(models.Model):
-    id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4, max_length=256)
+    transaction_id = models.CharField(primary_key=True, unique=True, default=uuid.uuid4, max_length=256)
     payment_timestamp = models.DateTimeField(auto_now_add=True)
     payer = models.ForeignKey(Member, on_delete=models.DO_NOTHING)
     deal = models.ForeignKey(Deal, on_delete=models.DO_NOTHING, null=True)
