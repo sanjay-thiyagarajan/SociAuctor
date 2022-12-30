@@ -41,13 +41,46 @@
                                 <form method="POST">
                                     {% csrf_token %}
                                     {% if poster %}
-                                        <h3>Edit Activity Details</h3><br/>
+                                        <br/>
+                                        <h3><b>Edit Activity Details</b></h3><br/>
+                                        <form method="post" style="border-radius: 35px;border: 2px solid black;width: 550px;max-width: 550px;">
+                                            {% csrf_token %}
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label">Product Image</label>
+                                                <input required class="form-control" type="file" name="image" accept="image/*" id="formFile" value={{activity.image.url}}>
+                                            </div><br/>
+                                            <div class="mb-3">
+                                                <label for="formProofFile" class="form-label">Proof Document</label>
+                                                <input required class="form-control" type="file" name="proofdoc" accept="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint,
+                                                text/plain, application/pdf, image/*" id="formProofFile" value={{activity.proof}}>
+                                            </div>
+                                            <input required class="form-control" type="text" name="title" placeholder="Title" style="padding: 5px;" value={{activity.title}}><br/>
+                                            <textarea required class="form-control" name="description" placeholder="Description" style="padding: 5px;">{{activity.description}}</textarea>
+                                            <input required class="form-control" type="number" name="amount" placeholder="Amount" style="padding: 5px;margin-top: 10px;" value={{activity.amount}}>
+                                            <select required class="form-control" name="category" placeholder="Category" style="padding: 5px;margin-top: 10px;">
+                                                <option disabled selected>Select Category</option>
+                                                {% for cat in categories %}
+                                                    <option value = "{{cat.name}}">{{cat.name}}</option>
+                                                {% endfor %}
+                                            </select><br/>
+                                            <div class="mb-3">
+                                                <label for="deadline" class="form-label">Deadline</label>
+                                                <input required class="form-control" type="datetime-local" placeholder="Deadline" id="deadline" name="deadline" style="padding: 5px;margin-top: 10px;" value={{activity.deadline}}>
+                                            </div>
+                                            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: black;border-radius: 7px; font-weight: bold; height: 60px;">SAVE CHANGES</button></div>
+                                        </form>
                                     {% else %}
                                         <div class="input-group">
                                             <input class="form-control" type="number" name="donation_amount_field" placeholder="Enter your donation amount here (eg. 10000.00)">
                                             <button type="submit" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;" class = "form-control">Donate</button>
                                         </div>
                                     {% endif %}
+                                </form>
+                                <br/>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input value="true" name="close_activity" hidden>
+                                    <button type="submit" style="background-color: red; color: white; border-color: red; padding: 10px; font-weight: bold; border-radius: 5px;" class = "form-control">Mark as failed and close activity</button>
                                 </form>
                                 <br/>
                                 {% if success %}

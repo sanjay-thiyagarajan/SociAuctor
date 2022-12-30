@@ -26,7 +26,7 @@ def loginApp(request):
 def home(request):
     data = {}
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
-    activities = Activity.objects.filter(poster=member)
+    activities = Activity.objects.exclude(status='failed').exclude(status='achieved').filter(poster=member)
     deals = Deal.objects.filter(poster=member)
     data['activities'] = activities
     data['deals'] = deals
@@ -142,6 +142,7 @@ def add_activity(request):
 
 @login_required(login_url='login')
 def view_activity(request, id):
+    categories = Category.objects.all()
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
     activity = Activity.objects.get(id = id)
     poster = False
@@ -152,15 +153,39 @@ def view_activity(request, id):
     percentage =  int((donated_amount / total ) * 100)
     remaining = total - donated_amount
     if request.method == 'POST':
-        donation_amount = request.POST.get('donation_amount_field')
-        if donation_amount > member.balance:
-            return render(request, 'panel/view-activity.html', { 'error': 'Insufficient balance in your wallet.' })
-        elif donation_amount > remaining:
-            return render(request, 'panel/view-activity.html', { 'warning': 'We appreciate your kind gesture. But the provided amount exceeds the expected amount. We recommend you to donate through our product deal auctions to reward the extra amount to passionate dealers' })
+        if 'donation_amount_field' in request.POST:
+            donation_amount = request.POST.get('donation_amount_field')
+            if donation_amount > member.balance:
+                return render(request, 'panel/view-activity.html', { 'error': 'Insufficient balance in your wallet.' })
+            elif donation_amount > remaining:
+                return render(request, 'panel/view-activity.html', { 'warning': 'We appreciate your kind gesture. But the provided amount exceeds the expected amount. We recommend you to donate through our product deal auctions to reward the extra amount to passionate dealers' })
+            else:
+                makeDonation(member, donation_amount, activity)
+                return render(request, 'panel/view-activity.html', {'success': True})
+        elif 'close_activity' in request.POST:
+            activity.status = 'failed'
+            activity.save()
+            return redirect('home')
         else:
-            makeDonation(member, donation_amount, activity)
-            return render(request, 'panel/view-activity.html', {'success': True})
-    return render(request, 'panel/view-activity.html', { 'activity': activity, 'percentage': percentage, 'remaining': remaining, 'poster': poster })
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            amount = request.POST.get('amount')
+            image = request.FILES.get('image')
+            proofdoc = request.FILES.get('proofdoc')
+            category = request.POST.get('category')
+            deadline = request.POST.get('deadline')
+            
+            activity.title = title
+            activity.poster = poster
+            activity.amount = amount
+            activity.description = description
+            activity.proof = proofdoc
+            activity.deadline = deadline
+            activity.category = Category.objects.get(name=category)
+            activity.image = image
+            activity.save()
+            return redirect('home')
+    return render(request, 'panel/view-activity.html', { 'activity': activity, 'percentage': percentage, 'remaining': remaining, 'poster': poster, 'categories': categories })
     
 @login_required(login_url='login')
 def view_deal(request, id):
