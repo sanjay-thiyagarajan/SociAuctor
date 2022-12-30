@@ -190,7 +190,38 @@ def view_activity(request, id):
 @login_required(login_url='login')
 def view_deal(request, id):
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
-    return render(request, 'panel/view-deal.html')
+    activities = Activity.objects.filter(status='in-need')
+    deal  = Deal.objects.get(id=id)
+    poster = False
+    if deal.poster.id == member.id:
+        poster = True
+    data = {'deal':deal,'poster':poster}
+    data['activities'] = activities
+    if request.method == 'POST':
+        if 'bid_amount_field' in request.POST:
+            bid_amount = float(request.POST.get('bid_amount_field'))
+            if bid_amount <= deal.bid_price:
+                data['warning'] = 'Place a higher bid amount.'
+            elif bid_amount > member.balance:
+                data['error'] = 'Insufficient balance in your wallet.'
+            else:
+                placeBid(member, bid_amount, deal)
+                data['success'] = True
+            return render(request, 'panel/view-deal.html', data)
+        else:
+            title = request.POST.get('title')
+            initial_price = request.POST.get('initial_price')
+            activity = request.POST.get('activity')
+            activity_id = activity.split(' - ')[0]
+            deadline = request.POST.get('deadline')
+
+            deal.title = title
+            deal.initial_price = initial_price
+            deal.activity = Activity.objects.get(id=activity_id)
+            deal.deadline = deadline
+            deal.save()
+            return redirect('home')
+    return render(request, 'panel/view-deal.html', data)
 
 @login_required(login_url='login')
 def wallet_view(request):
@@ -202,7 +233,13 @@ def wallet_view(request):
 def logoutApp(request):
     logout(request)
     return redirect(loginApp)
-    
+
+def placeBid(bidder,amount,deal):
+    if deal is not None:
+        deal.bid_price = amount
+        deal.highest_bidder = bidder
+        deal.save()
+
 def makeDonation(payer, amount, activity=None, deal=None):
     if activity is not None:
         activity.donated_amount += amount

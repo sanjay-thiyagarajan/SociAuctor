@@ -1,46 +1,88 @@
 {% extends 'panel/template.html' %}
 {% load static %}
 {% block head %}
-<title>Student Profile</title>
-<link rel="stylesheet" href="{% static 'css/Login-Form-Clean.css' %}">
-{% endblock %}
+    <title>{{deal.title}}</title>
+    <link rel="stylesheet" href="{% static 'css/Login-Form-Clean.css' %}">
+{% endblock head %}
 
 {% block sidebar %}
-                <ul class="navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'bookings' %}"><i class="fa fa-dollar"></i><span>Bookings</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li> {% endcomment %}
-                    <li class="nav-item"><a class="nav-link" href="{% url 'wallet_view' %}"><i class="fa fa-book"></i><span>Wallet</span></a></li>
-                </ul>
+    <ul class="navbar-nav text-light" id="accordionSidebar">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        {% comment %} <li class="nav-item"><a class="nav-link" href="{% url 'books' %}"><i class="fa fa-book"></i><span>Books</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'bookings' %}"><i class="fa fa-dollar"></i><span>Bookings</span></a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'view_profile' %}"><i class="fa fa-book"></i><span>Profile</span></a></li> {% endcomment %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'wallet_view' %}"><i class="fa fa-book"></i><span>Wallet</span></a></li>
+    </ul>
 {% endblock %}
-
 
 {% block content %}
-                <div class="container-fluid">
-                    <h3 class="text-dark mb-1" style="font-weight: bold;color: var(--bs-gray);margin-top: 20PX;">STUDENT PROFILE</h3>
-                </div><!-- Start: Login Form Clean -->
-                <section class="login-clean">
-                    <form method="post" style="border-radius: 35px;border: 2px solid var(--bs-red);width: 450px;max-width: 450px;">
-                        {% csrf_token %}
-                        <h2 class="visually-hidden">Student Form</h2>
-                        <div class="illustration"><i class="fa fa-book" style="color: var(--bs-red);"></i></div>
-                        <input required class="form-control" type="text" name="fullname" placeholder="Fullname" style="padding: 5px;" value={{fullname}}>
-                        <input required class="form-control" type="text" name="roll_number" placeholder="Roll number" style="padding: 5px;margin-top: 10px;" value={{roll_number}}>
-                        <input  required class="form-control" type="email" name="email" placeholder="Email address" style="padding: 5px;margin-top: 10px;" value={{email}}>
-                        <input required class="form-control" type="password" name="password" placeholder="New Password" style="padding: 5px;margin-top: 10px;">
-                        <input required class="form-control" type="password" name="password_cnfrm" placeholder="Confirm new password" style="padding: 5px;margin-top: 10px;">
-                        <select required class="form-control" name="academic_year" value={{academic_year}} placeholder="Academic year" style="padding: 5px;margin-top: 10px;">
-                            <option>I year</option>
-                            <option>II year</option>
-                            <option>III year</option>
-                            <option>IV year</option>
-                        </select>
-                        <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: var(--bs-red);border-radius: 7px;">UPDATE PROFILE</button></div>
-                        {% if error %}
-                            <p class="errorbox">{{error}}</p>
+    <div class="container-fluid">
+        <h3 class="text-dark mb-4" style="font-weight: bold;">{{deal.title}}</h3>
+        <p style="font-weight: bold; font-size: 15px;">Posted by:<br/>{{deal.poster}}<br/>{{deal.posted_on}}</p>
+        <div class="card shadow">
+            <div class="card-header py-3">
+                <p class="text-primary m-0 font-weight-bold" style="font-weight: bold; text-transform: uppercase; font-size: 20px;">Deal Info</p>
+            </div>
+            <div class="card-body">
+                <p style="font-size: 20px;">Deal closes on <font color="red"><b>{{deal.deadline}}</b></font></p>
+                <div class="card">
+                    <img class="card-img-top" src="{{deal.image.url}}" alt="No Image"  style="width: 100%; height: auto;">
+                    <div class="card-body">
+                        <br/>
+                        <p style="font-weight: bold; font-size: 20px;">This amount is for  <a href="/view_activity/{{deal.activity.id}}" style="text-decoration:none">{{deal.activity}}</a></p>
+                        <hr style="color: rgb(38,38,40);background: grey;border-width: 4px;margin-top: 50px;"><br/>
+                        <p style="font-weight: bold; font-size: 20px;">Initial Price: <span style="color:green;">$ {{deal.initial_price}}</span></p>
+                        <hr style="color: rgb(38,38,40);background: grey;border-width: 4px;margin-top: 50px;"><br/>
+                        <p style="font-weight: bold; font-size: 20px;">Current bid price: <span style="color:green;">$ {{deal.bid_price}}</span></p>
+                        <hr style="color: rgb(38,38,40);background: grey;border-width: 4px;margin-top: 50px;"><br/>
+                        <form method="POST">
+                            {% csrf_token %}
+                            {% if poster %}
+                                <h3>Edit Deal Details</h3><br/>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form method="post" style="border-radius: 35px;border: 2px solid black;width: 550px;max-width: 550px;">
+                                            {% csrf_token %}
+                                            <h2 class="visually-hidden">Deal Form</h2>
+                                            <div class="mb-3">
+                                                <label for="formFile" class="form-label">Product Image</label>
+                                                <input required class="form-control" type="file" name="image" accept="image/*" id="formFile">
+                                            </div>
+                                            <input required class="form-control" type="text" name="title" placeholder="Title" style="padding: 5px;">
+                                            <input required class="form-control" type="number" name="initial_price" placeholder="Initial Price" style="padding: 5px;margin-top: 10px;">
+                                            <select required class="form-control" name="activity" placeholder="Activity" style="padding: 5px;margin-top: 10px;">
+                                                <option disabled selected>Select Funding Activity</option>
+                                                {% for act in activities %}
+                                                    <option>{{act.id}} - {{act.title}}</option>
+                                                {% endfor %}
+                                            </select><br/>
+                                            <div class="mb-3">
+                                                <label for="deadline" class="form-label">Deadline</label>
+                                                <input required class="form-control" type="datetime-local" placeholder="Deadline" id="deadline" name="deadline" style="padding: 5px;margin-top: 10px;">
+                                            </div>
+                                            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit" style="background: black;border-radius: 7px;">ADD DEAL</button></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="input-group">
+                                    <input class="form-control" type="number" name="bid_amount_field" placeholder="Enter your bid amount here (eg. 100.00)">
+                                    <button type="submit" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;" class = "form-control">Bid</button>
+                                </div>
+                            {% endif %}
+                        </form>
+                        {% if success %}
+                            <p class="successbox" style="font-weight: bold;">Successfully placed your bid :)</p>
                         {% endif %}
-                    </form>
-                </section><!-- End: Login Form Clean -->
-
-{% endblock %}
+                        {% if error %}
+                            <p class="errorbox" style="font-weight: bold;">Error :( {{error}}</p>
+                        {% endif %}
+                        {% if warning %}
+                            <p class="warningbox" style="font-weight: bold;">{{warning}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
