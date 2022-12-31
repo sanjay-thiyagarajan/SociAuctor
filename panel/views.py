@@ -288,8 +288,10 @@ def deals(request):
 def funding_activities(request):
     data = {}
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
-    activities = Activity.objects.filter(status='in-need').exclude(poster=member)
-    data['activities'] = activities
+    your_activities = Activity.objects.filter(status='in-need',poster=member)
+    other_activities = Activity.objects.filter(status='in-need').exclude(poster=member)
+    data['your_activities'] = your_activities
+    data['other_activities'] = other_activities
     data['fullname'] = member.first_name + ' ' + member.last_name
     return render(request, 'panel/funding-activities.html', data)      
         
