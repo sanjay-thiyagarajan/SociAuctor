@@ -12,7 +12,7 @@ We propose a full stack web application which would serve as a bridge between pu
 - PostgreSQL
 
 ## 🧬 Relational Database Structure
-![image](https://github.com/Techipeeyon/Images/raw/main/CD1-Page-1.drawio%20(1).png)
+![image](https://github.com/Techipeeyon/Images/blob/main/CD1-Page-1.drawio%20(1).png)
 
 ## :blue_book: What we have learnt    
 ## :thinking: What's next ?  
