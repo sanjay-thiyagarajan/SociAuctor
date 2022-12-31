@@ -172,8 +172,8 @@ def view_activity(request, id):
             title = request.POST.get('title')
             description = request.POST.get('description')
             amount = request.POST.get('amount')
-            image = request.FILES.get('image')
-            proofdoc = request.FILES.get('proofdoc')
+            image = request.FILES.getlist('image')[-1]
+            proofdoc = request.FILES.getlist('proofdoc')[-1]
             category = request.POST.get('category')
             deadline = request.POST.get('deadline')
             
@@ -215,11 +215,13 @@ def view_deal(request, id):
             activity = request.POST.get('activity')
             activity_id = activity.split(' - ')[0]
             deadline = request.POST.get('deadline')
+            image = request.FILES.getlist('image')[-1]
 
             deal.title = title
             deal.initial_price = initial_price
             deal.activity = Activity.objects.get(id=activity_id)
             deal.deadline = deadline
+            deal.image = image
             deal.save()
             return redirect('home')
     data['fullname'] = member.first_name + ' ' + member.last_name
