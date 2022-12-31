@@ -7,8 +7,8 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=30, null=True)
     last_name = models.CharField(max_length=30)
-    email = models.EmailField(max_length=50, unique=True)
-    country = CountryField(null=True)
+    email = models.EmailField(max_length=50)
+    country = CountryField(null=True, max_length=100)
     balance = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
     
     def __str__(self):
