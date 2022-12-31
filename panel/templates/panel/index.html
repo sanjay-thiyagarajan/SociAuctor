@@ -30,13 +30,13 @@
                 <a href="{% url 'add_deal' %}" style="width: max-content;"><button type="button" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;">+ New Deal</button></a>
                 <br/>
                 {% if deals %}
-                    <div class="row">
+                    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
                         {% for deal in deals %}
-                            <div class = "col-sm-6">
+                            <div style="display: flex; margin: 10px;">
                                 <div class = "card" style="width: min-content">
                                     <img class="card-img-top" src="{{deal.image.url}}" alt="No Image"  style="width: 500px; height: 300px;">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{deal.title}}</h5>
+                                        <h5 class="card-title"><b>{{deal.title}}</b></h5>
                                         <p class="card-text">
                                             <b>{{deal.poster.first_name}} {{deal.poster.last_name}}</b><br/>
                                             <div class="row">
@@ -64,9 +64,9 @@
                 <a href="{% url 'add_activity' %}" style="width: max-content;"><button type="button" style="background-color: black; color: white; padding: 10px; font-weight: bold; border-color: black; border-radius: 5px;">+ New Funding Activity</button></a>
                 <br/>
                 {% if activities %}
-                    <div class="row">
+                    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
                         {% for activity in activities %}
-                            <div class = "col-sm-6">
+                            <div style="display: flex; margin: 10px;">
                                 <div class = "card" style="width: min-content">
                                     <img class="card-img-top" src="{{activity.image.url}}" alt="{{activity.category}}" style="width: 500px; height: 300px;">
                                     <div class="card-body">

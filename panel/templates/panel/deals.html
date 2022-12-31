@@ -27,13 +27,13 @@
             <br/>            
             <h3 style="font-weight:bold">My Deals</h3><br/>
             {% if your_deals %}
-            <div class="row">
+            <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
                 {% for deal in your_deals %}
-                    <div class = "col-sm-6">
+                    <div style="display: flex; margin: 10px;">
                         <div class = "card" style="width: min-content">
                             <img class="card-img-top" src="{{deal.image.url}}" alt="No Image"  style="width: 500px; height: 300px;">
                             <div class="card-body">
-                                <h5 class="card-title">{{deal.title}}</h5>
+                                <h5 class="card-title"><b>{{deal.title}}</b></h5>
                                 <p class="card-text">
                                     <b>{{deal.poster.first_name}} {{deal.poster.last_name}}</b><br/>
                                     <div class="row">
@@ -57,13 +57,13 @@
             <hr style="color: rgb(38,38,40);background: grey;border-width: 4px;margin-top: 50px;"><br/>
             <h3 style="font-weight:bold">Other Deals</h3><br/>
             {% if other_deals %}
-                <div class="row">
+                <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
                     {% for deal in other_deals %}
-                        <div class = "col-sm-6">
+                        <div style="display: flex; margin: 10px;">
                             <div class = "card" style="width: min-content">
                                 <img class="card-img-top" src="{{deal.image.url}}" alt="No Image"  style="width: 500px; height: 300px;">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{deal.title}}</h5>
+                                    <h5 class="card-title"><b>{{deal.title}}</b></h5>
                                     <p class="card-text">
                                         <b>{{deal.poster.first_name}} {{deal.poster.last_name}}</b><br/>
                                         <div class="row">
