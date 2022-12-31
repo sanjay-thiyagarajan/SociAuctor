@@ -52,9 +52,9 @@ class Deal(models.Model):
     ]
     image = models.ImageField(null=True)
     title = models.CharField(max_length=50, null=True)
-    poster = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='poster')
+    poster = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='poster', db_constraint=False)
     initial_price = models.DecimalField(decimal_places=2, max_digits=10, default=0.0)
-    highest_bidder = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='highestbidder')
+    highest_bidder = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='highestbidder', db_constraint=False)
     bid_price = models.DecimalField(decimal_places=2, max_digits=20, default=0.0)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
     status = models.CharField(choices=statuses, max_length=12)

@@ -187,7 +187,8 @@ def view_activity(request, id):
             activity.image = image
             activity.save()
             return redirect('home')
-    return render(request, 'panel/view-activity.html', { 'activity': activity, 'percentage': percentage, 'remaining': remaining, 'poster': poster, 'categories': categories })
+    fullname = member.first_name + ' ' + member.last_name
+    return render(request, 'panel/view-activity.html', { 'activity': activity, 'percentage': percentage, 'remaining': remaining, 'poster': poster, 'categories': categories, 'fullname': fullname})
     
 @login_required(login_url='login')
 def view_deal(request, id):
@@ -221,6 +222,7 @@ def view_deal(request, id):
             deal.deadline = deadline
             deal.save()
             return redirect('home')
+    data['fullname'] = member.first_name + ' ' + member.last_name
     return render(request, 'panel/view-deal.html', data)
 
 @login_required(login_url='login')
