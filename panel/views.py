@@ -152,7 +152,7 @@ def view_activity(request, id):
         poster = True
     donated_amount = activity.donated_amount
     total = activity.amount
-    percentage =  int((donated_amount / total ) * 100)
+    percentage =  str(int((donated_amount / total ) * 100)) + 'rem'
     remaining = total - donated_amount
     if request.method == 'POST':
         if 'donation_amount_field' in request.POST:
