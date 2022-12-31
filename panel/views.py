@@ -281,6 +281,7 @@ def deals(request):
     other_deals = Deal.objects.filter(status='available').exclude(poster=member)
     data['your_deals'] = your_deals
     data['other_deals'] = other_deals
+    data['fullname'] = member.first_name + ' ' + member.last_name
     return render(request, 'panel/deals.html', data) 
 
 @login_required(login_url='login')
@@ -289,5 +290,6 @@ def funding_activities(request):
     member = Member.objects.get(user = User.objects.get(id = request.user.id))
     activities = Activity.objects.filter(status='in-need').exclude(poster=member)
     data['activities'] = activities
+    data['fullname'] = member.first_name + ' ' + member.last_name
     return render(request, 'panel/funding-activities.html', data)      
         

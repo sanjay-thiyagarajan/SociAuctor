@@ -47,7 +47,7 @@
                                         <tr>
                                             <th>Transaction ID</th>
                                             <th>Timestamp</th>
-                                            <th>Deal</th>
+                                            <th>Deal / Activity</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -56,7 +56,13 @@
                                             <tr>
                                                 <td>{{tr.id}}</td>
                                                 <td>{{tr.payment_timestamp}}</td> 
-                                                <td>{{tr.deal.title}}</td>
+                                                <td>
+                                                    {% if tr.deal %}
+                                                        {{tr.deal.id}} - {{tr.deal.title}}
+                                                    {% else %}
+                                                        {{tr.activity.id}} - {{tr.activity.title}}
+                                                    {% endif %}
+                                                </td>
                                                 <td>{{tr.amount}}</td>
                                             </tr>
                                         {% endfor %}
