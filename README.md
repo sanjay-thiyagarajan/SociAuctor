@@ -10,6 +10,8 @@ We propose a full stack web application which would serve as a bridge between pu
 - Django
 - Azure Web App Service
 - PostgreSQL
+
+## 🧬
 ## :blue_book: What we have learnt    
 ## :thinking: What's next ?  
 - Extending the crowdfunding platform for social & economical causes  
