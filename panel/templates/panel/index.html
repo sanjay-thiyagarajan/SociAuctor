@@ -71,7 +71,7 @@
                                     <img class="card-img-top" src="{{activity.image.url}}" alt="{{activity.category}}" style="width: 500px; height: 300px;">
                                     <div class="card-body">
                                         <h5 class="card-title"><b>{{activity.title}}</b></h5>
-                                        <p class="card-text">{{activity.description}}<br/><br/><b style="font-size: 20px;">$ {{activity.amount}}</b></p>
+                                        <p class="card-text">{{activity.description|truncatewords:30}}<br/><br/><b style="font-size: 20px;">$ {{activity.amount}}</b></p>
                                         <a href="/view_activity/{{activity.id}}" class="btn btn-primary">View More</a>
                                     </div>
                                     <div class="card-footer text-muted">
