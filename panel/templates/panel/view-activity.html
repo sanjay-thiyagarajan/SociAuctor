@@ -45,7 +45,7 @@
                                     {% if poster %}
                                         <br/>
                                         <h3><b>Edit Activity Details</b></h3><br/>
-                                        <form method="post" style="border-radius: 35px;border: 2px solid black;width: 550px;max-width: 550px;">
+                                        <form method="post" style="border-radius: 35px;border: 2px solid black;width: 550px;max-width: 550px;" enctype="multipart/form-data">
                                             {% csrf_token %}
                                             <div class="mb-3">
                                                 <label for="formFile" class="form-label">Product Image</label>
